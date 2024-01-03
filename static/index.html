@@ -1,0 +1,37 @@
+<head>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocomplete</title>
+    <link rel="stylesheet" type="text/css" href="static/simple.min.css">
+    <link rel="stylesheet" type="text/css" href="static/main.css">
+		<script type="text/javascript" src="static/main.js"></script>
+</head>
+<body>
+	<div id="container">
+		<div id="prompt">
+			<label for="prompt_input">Enter a search query:</label>
+		  <input type="text" id="prompt_input" name="prompt_input">
+		  <input type="submit" id="submit_prompt" value="Start a new game">
+		</div>
+		<br>
+		<div id="game" hidden="true">
+			<label for="answer_input">Completion:</label>
+		  <input type="text" id="answer_input" name="answer_input">
+		  <input type="submit" id="answer_submit" value="Submit answer"><br>
+		  <label for="attempts_cnt">Guesses remaining:</label>
+		  <input type="text" id="attempts_cnt" name="attempts_cnt" readonly="true">
+		  <label for="completions_cnt">Completions remaining:</label>
+		  <input type="text" id="completions_cnt" name="completions_cnt" readonly="true">
+		  <div id="guess_list"></div>
+		  <div id="solution">
+		  	<p id="solution_status"></p>
+		  	<b>Correct completions</b>
+		  	<div id="solution_list"></div>
+		  </div>
+		</div>
+	</div>
+</body>
