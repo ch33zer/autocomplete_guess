@@ -12,7 +12,7 @@ class State {
 		this.chances = 3
 	}
 	valid(guessed) {
-		if (this.chances <= 0) {
+		if (this.won() || this.lost()) {
 			return false
 		}
 		for (const already of this.already_guessed) {
@@ -45,6 +45,7 @@ let STATE = null;
 function reset() {
 	DomProxy.attempts_cnt.value = STATE.chances
 	DomProxy.completions_cnt.value = STATE.answers.length
+	DomProxy.current_prompt.innerHTML = `${STATE.prompt} ____`
 	DomProxy.guess_list.innerHTML = ''
 	DomProxy.answer_input.value = ''
 	DomProxy.solution_list.innerHTML = ''
@@ -52,6 +53,7 @@ function reset() {
 	DomProxy.solution_status.classList.remove("win")
 	DomProxy.solution_status.classList.remove("lose")
 	DomProxy.solution.hidden = true
+	DomProxy.answer_submit.disabled = false
 }
 function show_results(won) {
 	let msg = "You won! You guessed all the completions."
@@ -69,6 +71,7 @@ function show_results(won) {
 		DomProxy.solution_list.appendChild(li)
 	}
 	DomProxy.solution.hidden = false
+	DomProxy.answer_submit.disabled = true
 }
 function win() {
 	show_results(true)
@@ -77,7 +80,7 @@ function lose() {
 	show_results(false)
 }
 async function get_completions(prompt) {
-	return ["foo"]
+	//return ["foo"]
 	const r = await fetch("get_completions/" + prompt)
 	const json = await r.json()
 	console.log(json)
@@ -85,8 +88,11 @@ async function get_completions(prompt) {
 }
 function record_guess(guess, correct) {
 	const li = document.createElement("li");
-	const guessText = document.createTextNode((correct ? "✅" : "❌") + " " + guess);
+	const guessText = document.createTextNode((correct ? "✅" : "❌") + " " + STATE.prompt + " ");
+	const promptText = document.createElement("i")
+	promptText.appendChild(document.createTextNode(guess))
 	li.appendChild(guessText)
+	li.appendChild(promptText)
 	DomProxy.guess_list.appendChild(li)
 }
 function submit_answer() {
