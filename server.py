@@ -3,6 +3,7 @@ import requests
 import urllib.parse
 import json
 import re
+
 app = Flask(__name__, static_folder="static")
 
 @app.route('/get_completions/<prompt>', methods=['GET'])
@@ -37,5 +38,6 @@ def complete(prompt):
 @app.route('/', methods=['GET'])
 def index():
 	return app.send_static_file("index.html")
+
 if __name__ == '__main__':
-   app.run(debug=True)
+   app.run(debug=False)
