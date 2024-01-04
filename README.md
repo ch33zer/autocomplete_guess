@@ -9,6 +9,9 @@ Play the live version at https://autocomplete-guess.blaise.gg/
 ## Run locally
 
 ```
+$ python -m venv venv
+$ source venv/bin/activate
+$ pip install -r requirements.txt
 $ python server.py
 ```
 
