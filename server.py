@@ -29,19 +29,19 @@ def complete(prompt):
 	debug_print(r_obj)
 	stripped = [re.sub('<[^<]+?>', '', resp[0]) for resp in r_obj] # strip out <b></b> tags
 	debug_print(stripped)
-	lower = [completion.lower() for completion in stripped]
+	lower = [completion.lower() for completion in stripped] # lowercase each entry for case insensitive matching
 	debug_print(lower)
-	normalize_spaces = [" ".join(completion.split()) for completion in lower]
+	normalize_spaces = [" ".join(completion.split()) for completion in lower] # remove duplicate spaces that may have been left over from previous steps
 	debug_print(normalize_spaces)
-	has_phrase = [completion for completion in normalize_spaces if prompt in completion]
+	has_phrase = [completion for completion in normalize_spaces if prompt in completion] # only keep completions where the prompt is entirely present
 	debug_print(has_phrase)
-	completion_only = [completion[completion.index(prompt) + len(prompt):].strip() for completion in has_phrase]
+	completion_only = [completion[completion.index(prompt) + len(prompt):].strip() for completion in has_phrase] # strip out the prompt
 	debug_print(completion_only)
-	no_empty = [completion for completion in completion_only if completion.strip()]
+	no_empty = [completion for completion in completion_only if completion.strip()] # only keep non-empty completions
 	debug_print(no_empty)
-	final = no_empty[:num_completions]
+	final = no_empty[:num_completions] # only keep first N completions
 	print(f"{prompt} -> {final}")
-	return jsonify(no_empty[:num_completions])
+	return jsonify(final)
 
 @app.route('/', methods=['GET'])
 def index():
